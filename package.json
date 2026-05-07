@@ -1,0 +1,39 @@
+{
+  "name": "tpo-lab-3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:chrome": "cross-env TEST_BROWSER=chrome jest --config jest-preset.js",
+    "test:firefox": "cross-env TEST_BROWSER=firefox jest --config jest-preset.js",
+    "test:all": "concurrently 'npm:test:chrome' 'npm:test:firefox'",
+    "report:chrome": "allure generate allure-results-chrome --clean -o allure-report-chrome && allure open allure-report-chrome",
+    "report:firefox": "allure generate allure-results-firefox --clean -o allure-report-firefox && allure open allure-report-firefox",
+    "test:chrome:report": "npm run test:chrome && npm run report:chrome",
+    "test:firefox:report": "npm run test:firefox && npm run report:firefox",
+    "lint": "eslint . --fix",
+    "format": "prettier --write .",
+    "magic": "npm run format && npm run lint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/jest": "^30.0.0",
+    "@types/selenium-webdriver": "^4.35.5",
+    "allure-commandline": "^2.38.1",
+    "chromedriver": "^148.0.1",
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.1.0",
+    "eslint": "^10.3.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-jest": "^29.15.2",
+    "eslint-plugin-prettier": "^5.5.5",
+    "geckodriver": "^6.1.0",
+    "jest": "^30.3.0",
+    "jest-allure2-reporter": "^2.3.0",
+    "prettier": "^3.8.3",
+    "selenium-webdriver": "^4.43.0"
+  }
+}

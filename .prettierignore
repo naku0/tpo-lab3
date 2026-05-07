@@ -1,0 +1,10 @@
+/build/
+/node_modules/
+*.log
+/.idea/
+/allure-report/
+/allure-report-chrome/
+/allure-report-firefox/
+/allure-results/
+package-lock.json
+

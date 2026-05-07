@@ -1,0 +1,14 @@
+package-lock.json
+
+node_modules
+.idea
+/tests/UC-01/users.json
+
+allure-report
+allure-report-chrome
+allure-report-firefox
+allure-results
+allure-results-chrome
+allure-results-firefox
+coverage
+
