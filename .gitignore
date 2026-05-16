@@ -2,7 +2,7 @@ package-lock.json
 
 node_modules
 .idea
-/tests/UC-01/users.json
+/utils/users.json
 
 allure-report
 allure-report-chrome

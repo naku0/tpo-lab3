@@ -38,7 +38,7 @@ class CaptchaSolverInterceptor {
       console.log('[CAPTCHA] Solved');
 
       return true;
-    } catch (e) {
+    } catch {
       console.log('[CAPTCHA] Not found');
 
       return false;

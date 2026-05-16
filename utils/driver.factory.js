@@ -9,8 +9,7 @@ class DriverFactory {
         const chromeOptions = new chrome.Options();
         chromeOptions.addArguments(
           '--start-maximized',
-          '--disable-blink-features=AutomationControlled',
-          '--user-data-dir=/tmp/chrome-profile'
+          '--disable-blink-features=AutomationControlled'
         );
         return new Builder()
           .forBrowser(browsername)
