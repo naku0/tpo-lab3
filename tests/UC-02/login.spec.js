@@ -26,7 +26,7 @@ describe('UC-02', () => {
     await driver.quit();
   });
 
-  it('should not successfully login with not existing account', async () => {
+  it('should not login with not existing account', async () => {
     // Arrange
 
     // Act
@@ -38,7 +38,7 @@ describe('UC-02', () => {
     expect(await loginPage.isThereVisibleError()).toBe(true);
   });
 
-  it('should not succesfully login with wrong passsword', async () => {
+  it('should not login with wrong passsword', async () => {
     //Arrange
     const invalidPassword = '12345678';
 

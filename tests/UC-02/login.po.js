@@ -71,18 +71,15 @@ class LoginPage {
     return await this.driver.executeScript((el) => el.validity.valid, element);
   }
 
-  async clearEmail() {
-    const element = await this.getEmailElement();
-    await element.clear();
-  }
-
-  async clearPassword() {
-    const element = await this.getPasswordElement();
-    await element.clear();
-  }
-
   async waitForPageLoad() {
     await this.driver.wait(until.elementLocated(this.emailInput), 10000);
+  }
+
+  async login(user) {
+    await this.waitForPageLoad();
+    await this.enterEmail(user.email);
+    await this.enterPassword(user.password);
+    await this.clickLoginButton();
   }
 }
 
