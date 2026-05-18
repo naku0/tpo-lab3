@@ -36,28 +36,19 @@ class ForgotPasswordPage {
     await this.driver.wait(until.elementLocated(this.emailField), 10000);
   }
 
-    async isOk() {
+  async isOk() {
+    try {
+      await this.driver.wait(async () => {
+        const elements = await this.driver.findElements(this.codeInput);
 
-        try {
+        return elements.length === 6;
+      }, 10000);
 
-            await this.driver.wait(async () => {
-
-                const elements =
-                    await this.driver.findElements(
-                        this.codeInput
-                    );
-
-                return elements.length === 6;
-
-            }, 10000);
-
-            return true;
-
-        } catch {
-
-            return false;
-        }
+      return true;
+    } catch {
+      return false;
     }
+  }
 }
 
 module.exports = ForgotPasswordPage;

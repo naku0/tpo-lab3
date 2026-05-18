@@ -1,31 +1,25 @@
 class CookieAnnihilator3000Interceptor {
+  static async annihilate(driver) {
+    try {
+      console.log('[COOKIE] Waiting Usercentrics');
 
-    static async annihilate(driver) {
-
-        try {
-
-            console.log('[COOKIE] Waiting Usercentrics');
-
-            const exists = await driver.wait(async () => {
-
-                return await driver.executeScript(`
+      const exists = await driver.wait(async () => {
+        return await driver.executeScript(`
                     return !!document.querySelector(
                         '#usercentrics-cmp-ui'
                     );
                 `);
+      }, 5000);
 
-            }, 5000);
+      if (!exists) {
+        console.log('[COOKIE] Banner not found');
 
-            if (!exists) {
+        return false;
+      }
 
-                console.log('[COOKIE] Banner not found');
+      console.log('[COOKIE] Removing overlay');
 
-                return false;
-            }
-
-            console.log('[COOKIE] Removing overlay');
-
-            await driver.executeScript(`
+      await driver.executeScript(`
 
                 const host =
                     document.querySelector(
@@ -38,22 +32,17 @@ class CookieAnnihilator3000Interceptor {
 
             `);
 
-            await driver.sleep(300);
+      await driver.sleep(300);
 
-            console.log('[COOKIE] Cookie annihilated');
+      console.log('[COOKIE] Cookie annihilated');
 
-            return true;
+      return true;
+    } catch (e) {
+      console.log('[COOKIE] Failed:', e.message);
 
-        } catch (e) {
-
-            console.log(
-                '[COOKIE] Failed:',
-                e.message
-            );
-
-            return false;
-        }
+      return false;
     }
+  }
 }
 
 module.exports = CookieAnnihilator3000Interceptor;

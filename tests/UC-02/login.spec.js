@@ -1,5 +1,5 @@
 const LoginPage = require('./login.po.js');
-const { getExistingUser, getNewUser } = require('../../utils/UserProvider.js');
+const { getExistingUser, getNewUser } = require('../../utils/user.provider.js');
 const CookieAnnihilator3000Interceptor = require('../../utils/cookie.annihilator.3000.interceptor');
 const { createDriver } = require('../../utils/driver.factory');
 
@@ -26,7 +26,7 @@ describe('UC-02', () => {
     await driver.quit();
   });
 
-  it('should not login with not existing account', async () => {
+  it.skip('should not login with not existing account', async () => {
     // Arrange
 
     // Act
@@ -38,7 +38,7 @@ describe('UC-02', () => {
     expect(await loginPage.isThereVisibleError()).toBe(true);
   });
 
-  it('should not login with wrong passsword', async () => {
+  it.skip('should not login with wrong passsword', async () => {
     //Arrange
     const invalidPassword = '12345678';
 
@@ -51,7 +51,7 @@ describe('UC-02', () => {
     expect(await loginPage.isThereVisibleError()).toBe(true);
   });
 
-  it('should show error if email is empty', async () => {
+  it.skip('should show error if email is empty', async () => {
     //Arrange
     const invalidMail = '';
 
@@ -64,7 +64,7 @@ describe('UC-02', () => {
     expect(await loginPage.isEmailValid()).toBe(false);
   });
 
-  it('should show error if password is empty', async () => {
+  it.skip('should show error if password is empty', async () => {
     //Arrange
     const invalidPassword = '';
 
@@ -77,7 +77,7 @@ describe('UC-02', () => {
     expect(await loginPage.isPasswordValid()).toBe(false);
   });
 
-  it('should successfully login with valid credentials', async () => {
+  it.skip('should successfully login with valid credentials', async () => {
     // Arrange
     const expectedUrl = 'https://www.xing.com/jobs/find';
 

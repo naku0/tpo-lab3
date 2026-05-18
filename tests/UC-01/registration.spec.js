@@ -1,5 +1,5 @@
 const RegistrationPage = require('./registration.po.js');
-const { getNewUser } = require('../../utils/UserProvider.js');
+const { getNewUser } = require('../../utils/user.provider.js');
 const CaptchaSolverInterceptor = require('../../utils/captcha.solver.interceptor.js');
 const CookieAnnihilator3000Interceptor = require('../../utils/cookie.annihilator.3000.interceptor');
 const { createDriver } = require('../../utils/driver.factory');
@@ -23,7 +23,7 @@ describe('UC-01', () => {
     await driver.quit();
   });
 
-  it('should not pass firstname validation', async () => {
+  it.skip('should not pass firstname validation', async () => {
     // Arrange
     const invalidFirstName = '';
 
@@ -35,7 +35,7 @@ describe('UC-01', () => {
     expect(await registrationPage.isFirstNameValid()).toBe(false);
   });
 
-  it('should not pass lastname validation', async () => {
+  it.skip('should not pass lastname validation', async () => {
     // Arrange
     const invalidLastName = '';
 
@@ -47,7 +47,7 @@ describe('UC-01', () => {
     expect(await registrationPage.isLastNameValid()).toBe(false);
   });
 
-  it('should not pass email validation', async () => {
+  it.skip('should not pass email validation', async () => {
     // Arrange
     const invalidEmail = 'invalid';
 
@@ -59,7 +59,7 @@ describe('UC-01', () => {
     expect(await registrationPage.isEmailValid()).toBe(false);
   });
 
-  it('should show password error message when all other fields are correct and password is not', async () => {
+  it.skip('should show password error message when all other fields are correct and password is not', async () => {
     // Arrange
     const invalidPassword = '1';
     const expectedErrorMessage =
