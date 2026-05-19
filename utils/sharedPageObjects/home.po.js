@@ -11,6 +11,8 @@ class HomePage {
     this.profileDropdown = By.xpath('//div[@data-testid="me-menu-dropdown"]');
 
     this.profileMenuItem = By.xpath('//a[@data-testid="me-menu-item-profile"]');
+
+    this.fakeInput = By.xpath('//input[@data-testid="search-bar-fake-input"]');
   }
 
   async waitForPageLoad() {
@@ -56,6 +58,11 @@ class HomePage {
     await this.clickProfileButton();
 
     await this.clickProfileMenuItem();
+  }
+
+  async openJobsPage() {
+    const fakeInputEl = await this.driver.wait(until.elementLocated(this.fakeInput),5000);
+    await fakeInputEl.click();
   }
 }
 

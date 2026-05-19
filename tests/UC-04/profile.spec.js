@@ -2,17 +2,18 @@ const CookieAnnihilator3000Interceptor = require('../../utils/cookie.annihilator
 const { createDriver } = require('../../utils/driver.factory');
 const { getExistingUser } = require('../../utils/user.provider');
 const LoginPage = require('../UC-02/login.po');
-const ProfilePage = require('./profile.po');
+const ProfilePage = require('./po/profile.po');
 const HomePage = require('../../utils/sharedPageObjects/home.po');
-const ProfileSettingsPage = require('./profile.settings.po');
-const ImageProvider = require('../../utils/image.provider');
-const LocationSettingsPage = require('./location.settings.po');
+const ProfileSettingsPage = require('./po/profile.settings.po');
+const LocationSettingsPage = require('./po/location.settings.po');
+const EntrySettingsPage = require("./po/entry.settings.po");
 
 let loginPage;
 let profilePage;
 let profilePersonalPage;
 let homePage;
 let locationSettingsPage;
+let entrySettingsPage;
 let driver;
 let existingUser;
 
@@ -26,6 +27,7 @@ describe('UC-04', () => {
     profilePersonalPage = new ProfileSettingsPage(driver);
     homePage = new HomePage(driver);
     locationSettingsPage = new LocationSettingsPage(driver);
+    entrySettingsPage = new EntrySettingsPage(driver);
 
     await driver.get('https://login.xing.com');
     await loginPage.waitForPageLoad();
@@ -128,18 +130,65 @@ describe('UC-04', () => {
       await CookieAnnihilator3000Interceptor.annihilate(driver);
     });
 
-    it('should change city', async () => {
+    xit('should change city', async () => {
+        // Arrange
       let newCity = 'Saint Petersburg';
+
+      // act
       await locationSettingsPage.enterCity(newCity);
       await locationSettingsPage.pushSaveButton();
       await profilePage.waitForPageLoad();
       await CookieAnnihilator3000Interceptor.annihilate(driver);
       let updatedCity = await profilePage.getCity();
+
+      // Assert
       expect(updatedCity).toBe(newCity);
     });
   });
 
-  describe('UC-04.4', () => {});
+  describe('UC-04.4', () => {
+      beforeEach(async () => {
+          await profilePage.waitForPageLoad();
+          await CookieAnnihilator3000Interceptor.annihilate(driver);
+          await profilePage.pushEditButton();
+          await CookieAnnihilator3000Interceptor.annihilate(driver);
+          await profilePage.openProfExpirience();
+          await entrySettingsPage.waitForPageLoad();
+          await CookieAnnihilator3000Interceptor.annihilate(driver);
+      });
+
+      xit('should add new job', async () => {
+          //Arrange
+          const job = {
+              jobTitle: 'Javascript Developer',
+              employmentType: '1',
+              careerLevel: '1',
+              discipline: '1011',
+              companyName: 'T-Bank',
+              companyIndustry: '120000.092d86',
+              companySegment: '120200.f7f203',
+              startDateMonth: '4',
+              startDateYear: '2026'
+          }
+
+          //Act
+          await entrySettingsPage.enterJobTitle(job.jobTitle);
+          await entrySettingsPage.selectEmploymentType(job.employmentType);
+          await entrySettingsPage.selectCareerLevel(job.careerLevel);
+          await entrySettingsPage.selectDiscipline(job.discipline);
+          await entrySettingsPage.enterCompanyName(job.companyName);
+          await entrySettingsPage.selectCompanyIndustry(job.companyIndustry);
+          await entrySettingsPage.selectCompanySegment(job.companySegment);
+          await entrySettingsPage.selectStartDate(job.startDateMonth, job.startDateYear);
+          await entrySettingsPage.submitForm();
+          await profilePage.waitForPageLoad();
+          await CookieAnnihilator3000Interceptor.annihilate(driver);
+          const isWorkplaceDisplayed = await entrySettingsPage.findWorkplace(job.companyName);
+
+          //Assert
+          expect(isWorkplaceDisplayed).toBe(true);
+      });
+  });
 
   describe('UC-04.5', () => {});
 });

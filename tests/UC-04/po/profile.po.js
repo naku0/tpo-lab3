@@ -22,6 +22,8 @@ class ProfilePage {
     this.locationText = By.xpath(
       '//*[@data-qa="location-pin-icon"]/following::strong[1]'
     );
+
+    this.experienceLink = By.xpath("//a[@test-id='add-moduleButton']");
   }
 
   async waitForPageLoad() {
@@ -50,6 +52,10 @@ class ProfilePage {
 
   async openLocation() {
     await this.driver.get(this.locationLink);
+  }
+
+  async openExperience() {
+    await this.driver.findElement(this.experienceLink).click();
   }
 
   async getProfileImageElement() {
