@@ -6,7 +6,7 @@ const ProfilePage = require('./po/profile.po');
 const HomePage = require('../../utils/sharedPageObjects/home.po');
 const ProfileSettingsPage = require('./po/profile.settings.po');
 const LocationSettingsPage = require('./po/location.settings.po');
-const EntrySettingsPage = require("./po/entry.settings.po");
+const EntrySettingsPage = require('./po/entry.settings.po');
 
 let loginPage;
 let profilePage;
@@ -130,8 +130,8 @@ describe('UC-04', () => {
       await CookieAnnihilator3000Interceptor.annihilate(driver);
     });
 
-    xit('should change city', async () => {
-        // Arrange
+    it.skip('should change city', async () => {
+      // Arrange
       let newCity = 'Saint Petersburg';
 
       // act
@@ -147,47 +147,48 @@ describe('UC-04', () => {
   });
 
   describe('UC-04.4', () => {
-      beforeEach(async () => {
-          await profilePage.waitForPageLoad();
-          await CookieAnnihilator3000Interceptor.annihilate(driver);
-          await profilePage.pushEditButton();
-          await CookieAnnihilator3000Interceptor.annihilate(driver);
-          await profilePage.openProfExpirience();
-          await entrySettingsPage.waitForPageLoad();
-          await CookieAnnihilator3000Interceptor.annihilate(driver);
-      });
+    beforeEach(async () => {
+      await profilePage.waitForPageLoad();
+      await CookieAnnihilator3000Interceptor.annihilate(driver);
+      await profilePage.pushEditButton();
+      await CookieAnnihilator3000Interceptor.annihilate(driver);
+      await profilePage.openProfExpirience();
+      await entrySettingsPage.waitForPageLoad();
+      await CookieAnnihilator3000Interceptor.annihilate(driver);
+    });
 
-      xit('should add new job', async () => {
-          //Arrange
-          const job = {
-              jobTitle: 'Javascript Developer',
-              employmentType: '1',
-              careerLevel: '1',
-              discipline: '1011',
-              companyName: 'T-Bank',
-              companyIndustry: '120000.092d86',
-              companySegment: '120200.f7f203',
-              startDateMonth: '4',
-              startDateYear: '2026'
-          }
+    it.skip('should add new job', async () => {
+      //Arrange
+      const job = {
+        jobTitle: 'Java Developer',
+        employmentType: '1',
+        careerLevel: '1',
+        discipline: '1011',
+        companyName: 'Palantir Technologies',
+        startDateMonth: '8',
+        startDateYear: '2026',
+      };
 
-          //Act
-          await entrySettingsPage.enterJobTitle(job.jobTitle);
-          await entrySettingsPage.selectEmploymentType(job.employmentType);
-          await entrySettingsPage.selectCareerLevel(job.careerLevel);
-          await entrySettingsPage.selectDiscipline(job.discipline);
-          await entrySettingsPage.enterCompanyName(job.companyName);
-          await entrySettingsPage.selectCompanyIndustry(job.companyIndustry);
-          await entrySettingsPage.selectCompanySegment(job.companySegment);
-          await entrySettingsPage.selectStartDate(job.startDateMonth, job.startDateYear);
-          await entrySettingsPage.submitForm();
-          await profilePage.waitForPageLoad();
-          await CookieAnnihilator3000Interceptor.annihilate(driver);
-          const isWorkplaceDisplayed = await entrySettingsPage.findWorkplace(job.companyName);
+      //Act
+      await entrySettingsPage.enterJobTitle(job.jobTitle);
+      await entrySettingsPage.selectEmploymentType(job.employmentType);
+      await entrySettingsPage.selectCareerLevel(job.careerLevel);
+      await entrySettingsPage.selectDiscipline(job.discipline);
+      await entrySettingsPage.enterCompanyName(job.companyName);
+      await entrySettingsPage.selectStartDate(
+        job.startDateMonth,
+        job.startDateYear
+      );
+      await entrySettingsPage.submitForm();
+      await profilePage.waitForPageLoad();
+      await CookieAnnihilator3000Interceptor.annihilate(driver);
+      const isWorkplaceDisplayed = await entrySettingsPage.findWorkplace(
+        job.companyName
+      );
 
-          //Assert
-          expect(isWorkplaceDisplayed).toBe(true);
-      });
+      //Assert
+      expect(isWorkplaceDisplayed).toBe(true);
+    });
   });
 
   describe('UC-04.5', () => {});

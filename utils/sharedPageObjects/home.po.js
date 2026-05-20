@@ -61,7 +61,10 @@ class HomePage {
   }
 
   async openJobsPage() {
-    const fakeInputEl = await this.driver.wait(until.elementLocated(this.fakeInput),5000);
+    const fakeInputEl = await this.driver.wait(
+      until.elementLocated(this.fakeInput),
+      5000
+    );
     await fakeInputEl.click();
   }
 }
