@@ -3,10 +3,10 @@ const { By, until, Key } = require('selenium-webdriver');
 class LocationSettingsPage {
   constructor(driver) {
     this.driver = driver;
-    this.cityInput = By.xpath('//input[@id="downshift-:r4:-input"]');
-    this.saveButton = By.xpath(
-      '//button[@data-testid="profile-contact-details-edit-done"]'
+    this.cityInput = By.xpath(
+      '//input[@role="combobox" and contains(@id, "downshift") and contains(@aria-controls, "downshift")]'
     );
+    this.saveButton = By.xpath('//button[@data-testid="profile-contact-details-edit-done"]');
   }
 
   async waitForPersonalPageLoad() {
@@ -15,6 +15,10 @@ class LocationSettingsPage {
 
   async getCityInput() {
     return await this.driver.wait(until.elementLocated(this.cityInput), 10000);
+  }
+
+  async getSaveButton() {
+    return await this.driver.wait(until.elementLocated(this.saveButton), 10000);
   }
 
   async enterCity(city) {
@@ -31,7 +35,8 @@ class LocationSettingsPage {
   }
 
   async pushSaveButton() {
-    await this.driver.findElement(this.saveButton).click();
+    const button = await this.getSaveButton();
+    await button.click();
   }
 }
 

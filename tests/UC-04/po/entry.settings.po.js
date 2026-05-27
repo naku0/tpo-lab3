@@ -4,6 +4,8 @@ class EntrySettingsPage {
   constructor(driver) {
     this.driver = driver;
     this.link = 'https://www.xing.com/profile/my_profile/timeline/add';
+    this.employeeUrl =
+      'https://www.xing.com/profile/my_profile/timeline/add/employee';
     this.profExpirienceLink = By.xpath(
       "//a[@href='/profile/my_profile/timeline/add/employee']"
     );
@@ -28,14 +30,27 @@ class EntrySettingsPage {
   }
 
   async waitForPageLoad() {
-    await this.driver.wait(
-      until.elementLocated(this.profExpirienceLink),
-      10000
-    );
+    await this.driver.wait(async () => {
+      const link = await this.driver.findElements(this.profExpirienceLink);
+      if (link.length > 0) return true;
+      const form = await this.driver.findElements(this.jobTitleInput);
+      return form.length > 0;
+    }, 10000);
   }
 
   async openProfExpirience() {
-    await this.driver.findElement(this.profExpirienceLink).click();
+    const link = await this.driver.findElements(this.profExpirienceLink);
+    if (link.length > 0) {
+      try {
+        await link[0].click();
+      } catch {
+        await this.driver.executeScript('arguments[0].click()', link[0]);
+      }
+    } else {
+      await this.driver.get(this.employeeUrl);
+    }
+
+    await this.driver.wait(until.elementLocated(this.jobTitleInput), 10000);
   }
 
   async enterJobTitle(jobTitle) {

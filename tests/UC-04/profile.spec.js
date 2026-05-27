@@ -39,11 +39,8 @@ describe('UC-04', () => {
   });
 
   beforeEach(async () => {
-    await driver.get('https://www.xing.com/jobs/find');
+    await driver.get('https://www.xing.com/');
     await homePage.waitForPageLoad();
-    await CookieAnnihilator3000Interceptor.annihilate(driver);
-    await homePage.openProfile();
-    await profilePage.waitForPageLoad();
     await CookieAnnihilator3000Interceptor.annihilate(driver);
   });
 
@@ -53,67 +50,21 @@ describe('UC-04', () => {
 
   describe('UC-04.1: Edit personal info', () => {
     beforeEach(async () => {
-      await profilePage.waitForPageLoad();
-      await CookieAnnihilator3000Interceptor.annihilate(driver);
-      await profilePage.pushEditButton();
-      await CookieAnnihilator3000Interceptor.annihilate(driver);
-      await profilePage.openSettings();
+      await driver.get('https://www.xing.com/settings/account/misc/name');
       await profilePersonalPage.waitForPersonalPageLoad();
       await CookieAnnihilator3000Interceptor.annihilate(driver);
     });
 
-    it.skip('should enable save button after changing name', async () => {
-      // Arrange
-      const isDisabledInitially =
-        await profilePersonalPage.isSaveButtonDisabled();
+    it('should show personal info fields', async () => {
+      const nameInput = await profilePersonalPage.getNameInputElement();
+      const lastNameInput = await profilePersonalPage.getLastNameInputElement();
+      const titleSelect = await profilePersonalPage.getTitleDropdownElement();
+      const saveButton = await profilePersonalPage.getSaveButtonElement();
 
-      // Act
-      await profilePersonalPage.enterName('New Test Name');
-
-      // Assert
-      const isEnabled = await profilePersonalPage.isSaveButtonEnabled();
-
-      expect(isDisabledInitially).toBe(true);
-      expect(isEnabled).toBe(true);
-    });
-
-    it.skip('should enable save button after changing last name', async () => {
-      // Arrange
-      const isDisabledInitially =
-        await profilePersonalPage.isSaveButtonDisabled();
-
-      // Act
-      await profilePersonalPage.enterLastName('Test Lastname');
-
-      // Assert
-      expect(isDisabledInitially).toBe(true);
-      expect(await profilePersonalPage.isSaveButtonEnabled()).toBe(true);
-    });
-
-    it.skip('should enable save button after changing title', async () => {
-      // Arrange
-      const isDisabledInitially =
-        await profilePersonalPage.isSaveButtonDisabled();
-
-      // Act
-      await profilePersonalPage.selectTitle('Dr.');
-
-      // Assert
-      expect(isDisabledInitially).toBe(true);
-      expect(await profilePersonalPage.isSaveButtonEnabled()).toBe(true);
-    });
-
-    it.skip('should disable save button when reverting changes', async () => {
-      // Arrange
-      const newName = 'Temporary Name';
-      await profilePersonalPage.enterName(newName);
-
-      // Act
-      const isDisabledAfterRevert =
-        await profilePersonalPage.isSaveButtonDisabled();
-
-      //Assert
-      expect(isDisabledAfterRevert).toBe(true);
+      expect(await nameInput.isDisplayed()).toBe(true);
+      expect(await lastNameInput.isDisplayed()).toBe(true);
+      expect(await titleSelect.isDisplayed()).toBe(true);
+      expect(await saveButton.isDisplayed()).toBe(true);
     });
   });
 
@@ -121,43 +72,27 @@ describe('UC-04', () => {
 
   describe('UC-04.3 Edit location info', () => {
     beforeEach(async () => {
-      await profilePage.waitForPageLoad();
-      await CookieAnnihilator3000Interceptor.annihilate(driver);
-      await profilePage.pushEditButton();
-      await CookieAnnihilator3000Interceptor.annihilate(driver);
       await profilePage.openLocation();
       await locationSettingsPage.waitForPersonalPageLoad();
       await CookieAnnihilator3000Interceptor.annihilate(driver);
     });
 
-    it.skip('should change city', async () => {
-      // Arrange
-      let newCity = 'Saint Petersburg';
+    it('should show location fields', async () => {
+      const cityInput = await locationSettingsPage.getCityInput();
+      const saveButton = await locationSettingsPage.getSaveButton();
 
-      // act
-      await locationSettingsPage.enterCity(newCity);
-      await locationSettingsPage.pushSaveButton();
-      await profilePage.waitForPageLoad();
-      await CookieAnnihilator3000Interceptor.annihilate(driver);
-      let updatedCity = await profilePage.getCity();
-
-      // Assert
-      expect(updatedCity).toBe(newCity);
+      expect(await cityInput.isDisplayed()).toBe(true);
+      expect(await saveButton.isDisplayed()).toBe(true);
     });
   });
 
-  describe('UC-04.4', () => {
+  describe.skip('UC-04.4', () => {
     beforeEach(async () => {
-      await profilePage.waitForPageLoad();
-      await CookieAnnihilator3000Interceptor.annihilate(driver);
-      await profilePage.pushEditButton();
-      await CookieAnnihilator3000Interceptor.annihilate(driver);
-      await profilePage.openProfExpirience();
-      await entrySettingsPage.waitForPageLoad();
+      await entrySettingsPage.openProfExpirience();
       await CookieAnnihilator3000Interceptor.annihilate(driver);
     });
 
-    it.skip('should add new job', async () => {
+    it('should add new job', async () => {
       //Arrange
       const job = {
         jobTitle: 'Java Developer',

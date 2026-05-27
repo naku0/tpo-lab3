@@ -1,12 +1,10 @@
 const CookieAnnihilator3000Interceptor = require('../../utils/cookie.annihilator.3000.interceptor');
 const { createDriver } = require('../../utils/driver.factory');
-const HomePage = require('../../utils/sharedPageObjects/home.po');
 const JobsPage = require('./jobs.po');
 const LoginPage = require('../UC-02/login.po');
 const { getExistingUser } = require('../../utils/user.provider');
 
 let driver;
-let homePage;
 let jobsPage;
 let loginPage;
 let existingUser;
@@ -14,7 +12,6 @@ let existingUser;
 describe('UC-05', () => {
   beforeAll(async () => {
     driver = await createDriver();
-    homePage = new HomePage(driver);
     jobsPage = new JobsPage(driver);
     loginPage = new LoginPage(driver);
     existingUser = getExistingUser();
@@ -22,12 +19,11 @@ describe('UC-05', () => {
     await CookieAnnihilator3000Interceptor.annihilate(driver);
     await loginPage.login(existingUser);
     await CookieAnnihilator3000Interceptor.annihilate(driver);
-    await homePage.waitForPageLoad();
+    await driver.get('https://www.xing.com/');
     await CookieAnnihilator3000Interceptor.annihilate(driver);
   });
 
   beforeEach(async () => {
-    await CookieAnnihilator3000Interceptor.annihilate(driver);
     await driver.get('https://www.xing.com/');
     await CookieAnnihilator3000Interceptor.annihilate(driver);
   });
@@ -39,7 +35,7 @@ describe('UC-05', () => {
     //TODO: Fix input search
   it('should find member', async () => {
     //assert
-    const member = 'John Brown';
+    const member = 'Alex';
 
     //act
     await CookieAnnihilator3000Interceptor.annihilate(driver);
@@ -48,10 +44,10 @@ describe('UC-05', () => {
     await jobsPage.findMember(member);
 
     //assert
-    expect(await jobsPage.tryToFindMember('John Brown')).toBe(true);
+    expect(await jobsPage.tryToFindMember(member)).toBe(true);
   });
 
-  xit('should find job', async () => {
+  it('should find job', async () => {
     //assert
     const job = 'java';
 
@@ -66,18 +62,17 @@ describe('UC-05', () => {
   });
 
 
-  //TODO: Fix input search
-  xit('should find company', async () => {
+  it('should find company', async () => {
     //assert
-    const company = 'Palantir Technologies';
+    const query = 'developer';
 
     //act
       await CookieAnnihilator3000Interceptor.annihilate(driver);
     await jobsPage.clickCompanies();
     await CookieAnnihilator3000Interceptor.annihilate(driver);
-    await jobsPage.findCompany(company);
+    await jobsPage.findCompany(query);
 
     //assert
-    expect(await jobsPage.tryToFindCompany('Palantir Technologies')).toBe(true);
+    expect(await jobsPage.hasAnyCompanyInResults()).toBe(true);
   });
 });

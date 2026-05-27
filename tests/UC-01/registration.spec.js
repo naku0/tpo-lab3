@@ -23,7 +23,7 @@ describe('UC-01', () => {
     await driver.quit();
   });
 
-  it.skip('should not pass firstname validation', async () => {
+  it('should not pass firstname validation', async () => {
     // Arrange
     const invalidFirstName = '';
 
@@ -35,7 +35,7 @@ describe('UC-01', () => {
     expect(await registrationPage.isFirstNameValid()).toBe(false);
   });
 
-  it.skip('should not pass lastname validation', async () => {
+  it('should not pass lastname validation', async () => {
     // Arrange
     const invalidLastName = '';
 
@@ -47,7 +47,7 @@ describe('UC-01', () => {
     expect(await registrationPage.isLastNameValid()).toBe(false);
   });
 
-  it.skip('should not pass email validation', async () => {
+  it('should not pass email validation', async () => {
     // Arrange
     const invalidEmail = 'invalid';
 
@@ -77,7 +77,7 @@ describe('UC-01', () => {
     expect(errorText).toBe(expectedErrorMessage);
   });
 
-  it.skip('should register a new user', async () => {
+  it('should register a new user', async () => {
     // Arrange
     // (данные user уже получены в beforeAll)
 
