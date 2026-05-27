@@ -4,7 +4,9 @@ class ProfileSettingsPage {
   constructor(driver) {
     this.driver = driver;
 
-    this.titleDropdown = By.xpath('//select[@data-qa="dropdown"]');
+    this.titleDropdown = By.xpath(
+      '//select[@data-testid="academic-title-select" or @data-qa="dropdown"]'
+    );
     this.nameInput = By.xpath('//input[@data-testid="first-name"]');
     this.lastNameInput = By.xpath('//input[@data-testid="last-name"]');
     this.imageInput = By.xpath(
@@ -126,6 +128,8 @@ class ProfileSettingsPage {
   }
 
   async waitForPersonalPageLoad() {
+    await this.driver.wait(until.elementLocated(this.nameInput), 10000);
+    await this.driver.wait(until.elementLocated(this.lastNameInput), 10000);
     await this.driver.wait(until.elementLocated(this.titleDropdown), 10000);
   }
 

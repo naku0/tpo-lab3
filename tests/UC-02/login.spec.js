@@ -26,7 +26,7 @@ describe('UC-02', () => {
     await driver.quit();
   });
 
-  it.skip('should not login with not existing account', async () => {
+  it('should not login with not existing account', async () => {
     // Arrange
 
     // Act
@@ -38,7 +38,7 @@ describe('UC-02', () => {
     expect(await loginPage.isThereVisibleError()).toBe(true);
   });
 
-  it.skip('should not login with wrong passsword', async () => {
+  it('should not login with wrong passsword', async () => {
     //Arrange
     const invalidPassword = '12345678';
 
@@ -51,7 +51,7 @@ describe('UC-02', () => {
     expect(await loginPage.isThereVisibleError()).toBe(true);
   });
 
-  it.skip('should show error if email is empty', async () => {
+  it('should show error if email is empty', async () => {
     //Arrange
     const invalidMail = '';
 
@@ -64,12 +64,12 @@ describe('UC-02', () => {
     expect(await loginPage.isEmailValid()).toBe(false);
   });
 
-  it.skip('should show error if password is empty', async () => {
+  it('should show error if password is empty', async () => {
     //Arrange
     const invalidPassword = '';
 
     //Act
-    await loginPage.enterEmail(existingUser.password);
+    await loginPage.enterEmail(existingUser.email);
     await loginPage.enterPassword(invalidPassword);
     await loginPage.clickLoginButton();
 
@@ -77,7 +77,7 @@ describe('UC-02', () => {
     expect(await loginPage.isPasswordValid()).toBe(false);
   });
 
-  it.skip('should successfully login with valid credentials', async () => {
+  it('should successfully login with valid credentials', async () => {
     // Arrange
     const expectedUrl = 'https://www.xing.com/jobs/find';
 

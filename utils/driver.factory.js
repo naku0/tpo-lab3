@@ -3,7 +3,7 @@ const chrome = require('selenium-webdriver/chrome');
 const firefox = require('selenium-webdriver/firefox');
 
 class DriverFactory {
-  static async createDriver(browsername = 'chrome') {
+  static async createDriver(browsername = process.env.TEST_BROWSER || 'chrome') {
     switch (browsername.toLowerCase()) {
       case 'chrome': {
         const chromeOptions = new chrome.Options();
