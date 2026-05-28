@@ -62,7 +62,7 @@ describe('UC-04', () => {
       await CookieAnnihilator3000Interceptor.annihilate(driver);
     });
 
-    it.skip('should enable save button after changing name', async () => {
+    it('should enable save button after changing name', async () => {
       // Arrange
       const isDisabledInitially =
         await profilePersonalPage.isSaveButtonDisabled();
@@ -77,7 +77,7 @@ describe('UC-04', () => {
       expect(isEnabled).toBe(true);
     });
 
-    it.skip('should enable save button after changing last name', async () => {
+    it('should enable save button after changing last name', async () => {
       // Arrange
       const isDisabledInitially =
         await profilePersonalPage.isSaveButtonDisabled();
@@ -90,7 +90,7 @@ describe('UC-04', () => {
       expect(await profilePersonalPage.isSaveButtonEnabled()).toBe(true);
     });
 
-    it.skip('should enable save button after changing title', async () => {
+    it('should enable save button after changing title', async () => {
       // Arrange
       const isDisabledInitially =
         await profilePersonalPage.isSaveButtonDisabled();
@@ -103,7 +103,7 @@ describe('UC-04', () => {
       expect(await profilePersonalPage.isSaveButtonEnabled()).toBe(true);
     });
 
-    it.skip('should disable save button when reverting changes', async () => {
+    it('should disable save button when reverting changes', async () => {
       // Arrange
       const newName = 'Temporary Name';
       await profilePersonalPage.enterName(newName);
@@ -130,7 +130,7 @@ describe('UC-04', () => {
       await CookieAnnihilator3000Interceptor.annihilate(driver);
     });
 
-    it.skip('should change city', async () => {
+    it('should change city', async () => {
       // Arrange
       let newCity = 'Saint Petersburg';
 
@@ -157,7 +157,7 @@ describe('UC-04', () => {
       await CookieAnnihilator3000Interceptor.annihilate(driver);
     });
 
-    it.skip('should add new job', async () => {
+    it('should add new job', async () => {
       //Arrange
       const job = {
         jobTitle: 'Java Developer',

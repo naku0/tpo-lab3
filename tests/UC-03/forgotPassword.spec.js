@@ -29,7 +29,7 @@ describe('UC-03: forgotPassword()', () => {
     await driver.quit();
   });
 
-  it.skip('should open code input for existing user', async () => {
+  it('should open code input for existing user', async () => {
     // Act
     await forgotPasswordPage.enterEmail(existingUser.email);
     await forgotPasswordPage.clickRecoveryButton();
@@ -38,7 +38,7 @@ describe('UC-03: forgotPassword()', () => {
     expect(await forgotPasswordPage.isOk()).toBe(true);
   });
 
-  it.skip('should also open code input for not existing user', async () => {
+  it('should also open code input for not existing user', async () => {
     // Act
     await forgotPasswordPage.enterEmail(newUser.email);
     await forgotPasswordPage.clickRecoveryButton();
