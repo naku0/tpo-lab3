@@ -77,6 +77,26 @@ describe('UC-01', () => {
     expect(errorText).toBe(expectedErrorMessage);
   });
 
+  it('should show password error message when all other fields are correct and password is very long', async () => {
+    // Arrange
+    const invalidPassword = 'juyffdgbhjuy6resdfghyu65r4edefghju76yt5r4edfghyujghnbmjkiuhhghhjkuyghjmnkhgfdgjfj12345678888888888#%$Y%Y%T^$#%@$#!';
+    const expectedErrorMessage =
+      'Unfortunately you can\'t sign up with the details you\'ve entered. If you have questions about this, feel free to get in touch.';
+
+    // Act
+    await registrationPage.enterFirstName(user.firstname);
+    await registrationPage.enterLastName(user.lastname);
+    await registrationPage.enterEmail(user.email);
+    await registrationPage.enterPassword(invalidPassword);
+    await registrationPage.clickRegisterButton();
+
+    await registrationPage.waitForPageLoad();
+
+    // Assert
+    const errorEl = await registrationPage.getLongPasswordErrorMessage();
+    expect(errorEl).toBeTruthy();
+  });
+
   it('should register a new user', async () => {
     // Arrange
     // (данные user уже получены в beforeAll)

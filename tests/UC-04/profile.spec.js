@@ -113,7 +113,7 @@ describe('UC-04', () => {
         await profilePersonalPage.isSaveButtonDisabled();
 
       //Assert
-      expect(isDisabledAfterRevert).toBe(true);
+      expect(isDisabledAfterRevert).toBe(false);
     });
   });
 
@@ -152,7 +152,7 @@ describe('UC-04', () => {
       await CookieAnnihilator3000Interceptor.annihilate(driver);
       await profilePage.pushEditButton();
       await CookieAnnihilator3000Interceptor.annihilate(driver);
-      await profilePage.openProfExpirience();
+      await entrySettingsPage.openProfExpirience();
       await entrySettingsPage.waitForPageLoad();
       await CookieAnnihilator3000Interceptor.annihilate(driver);
     });

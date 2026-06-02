@@ -55,7 +55,7 @@ class ProfileSettingsPage {
   async selectTitle(title) {
     const dropdown = await this.getTitleDropdownElement();
     await dropdown.click();
-    const option = By.xpath(`//option[text()="${title}"]`);
+    const option = By.xpath(`//option[@value="${title}"]`);
     await this.driver.findElement(option).click();
   }
 

@@ -36,7 +36,7 @@ describe('UC-05', () => {
     await driver.quit();
   });
 
-    //TODO: Fix input search
+  //TODO: Fix input search
   it('should find member', async () => {
     //assert
     const member = 'John Brown';
@@ -51,7 +51,7 @@ describe('UC-05', () => {
     expect(await jobsPage.tryToFindMember('John Brown')).toBe(true);
   });
 
-  xit('should find job', async () => {
+  it('should find job', async () => {
     //assert
     const job = 'java';
 
@@ -67,7 +67,7 @@ describe('UC-05', () => {
 
 
   //TODO: Fix input search
-  xit('should find company', async () => {
+  it('should find company', async () => {
     //assert
     const company = 'Palantir Technologies';
 
@@ -80,4 +80,19 @@ describe('UC-05', () => {
     //assert
     expect(await jobsPage.tryToFindCompany('Palantir Technologies')).toBe(true);
   });
+
+  it('should write gibberish in search', async () => {
+    //assert
+    const gibberish = "dfskjgjskafjksfdfske";
+
+    //act
+    await CookieAnnihilator3000Interceptor.annihilate(driver);
+    await jobsPage.clickJobs();
+    await CookieAnnihilator3000Interceptor.annihilate(driver);
+    await jobsPage.findJob(gibberish)
+    await CookieAnnihilator3000Interceptor.annihilate(driver);
+
+    //assert
+    expect(await jobsPage.tryToFindBiliberdaResult()).toBe(true);
+  })
 });

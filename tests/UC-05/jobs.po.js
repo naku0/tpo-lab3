@@ -4,13 +4,14 @@ class JobsPage {
   constructor(driver) {
     this.driver = driver;
     this.searchButton = By.xpath('//a[@data-testid="frame-vnav-search"]');
-    this.searchInput = By.xpath('//input[@id="search-input"]');
-    this.jobSearchInput = By.xpath('//textarea[@id="query-input-input"]');
+    this.searchInput = By.xpath('/html/body/div[1]/div[2]/div/div/main/div/section/div/div/div[2]/form/div/input');
+    this.jobSearchInput = By.xpath('/html/body/div[1]/div[2]/div/div/main/div/section/div[4]/div[1]/div/div/form/div[1]/div[1]/div/textarea');
     this.modal = By.xpath('//div[@data-xds="PopOver"]//a[@data-testid="nav-search-members"]');
     this.members = By.xpath('//a[@data-testid="nav-search-members"]');
     this.jobs = By.xpath('//a[@data-testid="nav-search-jobs"]');
     this.companies = By.xpath('//a[@data-testid="nav-search-companies"]');
     this.submitButton = By.xpath('//form//button[@type="submit"]');
+    this.beliberdaResult = By.xpath('//div[@data-testid="members-search-results-list"');
   }
 
   async submit() {
@@ -121,6 +122,16 @@ class JobsPage {
       const elements = await this.driver.findElements(locator);
 
       return elements.length > 0;
+    } catch {
+      return false;
+    }
+  }
+
+  async tryToFindBiliberdaResult() {
+    try {
+      const elements = await this.driver.findElements(this.beliberdaResult);
+
+      return !!elements.length;
     } catch {
       return false;
     }

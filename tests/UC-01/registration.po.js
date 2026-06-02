@@ -11,6 +11,7 @@ class RegistrationPage {
       '//button[@data-testid="register-submit-button"]'
     );
     this.passwordError = By.xpath('//div[@data-qa="strength-indicator-text"]');
+    this.longPasswordErrorMessage = By.xpath('//*[@id="javascript-content"]/div[2]/main/div/form/div[3]/div[5]/div');
   }
 
   async getFirstNameElement() {
@@ -45,6 +46,15 @@ class RegistrationPage {
     );
     await this.driver.wait(until.elementIsVisible(element), 5000);
     return await element.getText();
+  }
+
+  async getLongPasswordErrorMessage() {
+    const element = await this.driver.wait(
+      until.elementLocated(this.longPasswordErrorMessage),
+      10000
+    );
+    await this.driver.wait(until.elementIsVisible(element), 5000);
+    return await element;
   }
 
   async isFirstNameValid() {
