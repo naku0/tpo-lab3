@@ -12,12 +12,15 @@ describe('UC-01', () => {
   beforeAll(async () => {
     // Arrange (глобальный)
     driver = await createDriver();
-    await driver.get('https://www.xing.com/start/signup');
     registrationPage = new RegistrationPage(driver);
     user = getRegistrationUser();
-    await registrationPage.waitForPageLoad();
-    await CookieAnnihilator3000Interceptor.annihilate(driver);
   });
+
+  beforeEach(async () => {
+      await driver.get('https://www.xing.com/start/signup');
+      await registrationPage.waitForPageLoad();
+      await CookieAnnihilator3000Interceptor.annihilate(driver);
+  })
 
   afterAll(async () => {
     await driver.quit();
