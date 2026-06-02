@@ -8,6 +8,7 @@ class ForgotPasswordPage {
       '//button[@data-test-id="recovery-next-button"]'
     );
     this.codeInput = By.xpath('//input[@inputmode="tel"]');
+    this.passwordWarning = By.xpath('//*[@id="javascript-content"]/div/div[1]/main/form/div[2]');
   }
 
   async getEmailField() {
@@ -40,8 +41,16 @@ class ForgotPasswordPage {
     try {
       await this.driver.wait(async () => {
         const elements = await this.driver.findElements(this.codeInput);
-
-        return elements.length === 6;
+        const warning = await this.driver.findElements(this.passwordWarning);
+        
+        console.log(elements, warning)
+        
+        return elements.length === 6 || 
+          await this.driver.wait(
+            until.elementLocated(this.passwordWarning),
+            10000
+        );
+      
       }, 10000);
 
       return true;

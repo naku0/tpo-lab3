@@ -8,4 +8,8 @@ const getExistingUser = () => {
   return users.existingUser;
 };
 
-module.exports = { getNewUser, getExistingUser };
+const getRegistrationUser = () => {
+  return users.registrationUser;
+}
+
+module.exports = { getNewUser, getExistingUser, getRegistrationUser };

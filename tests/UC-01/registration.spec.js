@@ -1,5 +1,5 @@
 const RegistrationPage = require('./registration.po.js');
-const { getNewUser } = require('../../utils/user.provider.js');
+const { getRegistrationUser } = require('../../utils/user.provider.js');
 const CaptchaSolverInterceptor = require('../../utils/captcha.solver.interceptor.js');
 const CookieAnnihilator3000Interceptor = require('../../utils/cookie.annihilator.3000.interceptor');
 const { createDriver } = require('../../utils/driver.factory');
@@ -14,7 +14,7 @@ describe('UC-01', () => {
     driver = await createDriver();
     await driver.get('https://www.xing.com/start/signup');
     registrationPage = new RegistrationPage(driver);
-    user = getNewUser();
+    user = getRegistrationUser();
     await registrationPage.waitForPageLoad();
     await CookieAnnihilator3000Interceptor.annihilate(driver);
   });
@@ -23,7 +23,7 @@ describe('UC-01', () => {
     await driver.quit();
   });
 
-  it.skip('should not pass firstname validation', async () => {
+  it('should not pass firstname validation', async () => {
     // Arrange
     const invalidFirstName = '';
 
@@ -35,7 +35,7 @@ describe('UC-01', () => {
     expect(await registrationPage.isFirstNameValid()).toBe(false);
   });
 
-  it.skip('should not pass lastname validation', async () => {
+  it('should not pass lastname validation', async () => {
     // Arrange
     const invalidLastName = '';
 
@@ -47,7 +47,7 @@ describe('UC-01', () => {
     expect(await registrationPage.isLastNameValid()).toBe(false);
   });
 
-  it.skip('should not pass email validation', async () => {
+  it('should not pass email validation', async () => {
     // Arrange
     const invalidEmail = 'invalid';
 
@@ -59,7 +59,7 @@ describe('UC-01', () => {
     expect(await registrationPage.isEmailValid()).toBe(false);
   });
 
-  it.skip('should show password error message when all other fields are correct and password is not', async () => {
+  it('should show password error message when all other fields are correct and password is not', async () => {
     // Arrange
     const invalidPassword = '1';
     const expectedErrorMessage =
@@ -77,7 +77,27 @@ describe('UC-01', () => {
     expect(errorText).toBe(expectedErrorMessage);
   });
 
-  it.skip('should register a new user', async () => {
+  it('should show password error message when all other fields are correct and password is very long', async () => {
+    // Arrange
+    const invalidPassword = 'juyffdgbhjuy6resdfghyu65r4edefghju76yt5r4edfghyujghnbmjkiuhhghhjkuyghjmnkhgfdgjfj12345678888888888#%$Y%Y%T^$#%@$#!';
+    const expectedErrorMessage =
+      'Unfortunately you can\'t sign up with the details you\'ve entered. If you have questions about this, feel free to get in touch.';
+
+    // Act
+    await registrationPage.enterFirstName(user.firstname);
+    await registrationPage.enterLastName(user.lastname);
+    await registrationPage.enterEmail(user.email);
+    await registrationPage.enterPassword(invalidPassword);
+    await registrationPage.clickRegisterButton();
+
+    await registrationPage.waitForPageLoad();
+
+    // Assert
+    const errorEl = await registrationPage.getLongPasswordErrorMessage();
+    expect(errorEl).toBeTruthy();
+  });
+
+  it('should register a new user', async () => {
     // Arrange
     // (данные user уже получены в beforeAll)
 
