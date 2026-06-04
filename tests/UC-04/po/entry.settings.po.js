@@ -52,7 +52,8 @@ class EntrySettingsPage {
       until.elementLocated(this.employmentDropdown),
       5000
     );
-    await dropdown.click();
+    await this.driver.executeScript("arguments[0].click();", dropdown);
+    // await dropdown.click();
     const option = By.xpath(
       `//select[@name='employment']/option[@value='${value}']`
     );
@@ -64,7 +65,8 @@ class EntrySettingsPage {
       until.elementLocated(this.careerLevel),
       5000
     );
-    await dropdown.click();
+    await this.driver.executeScript("arguments[0].click();", dropdown);
+    // await dropdown.click();
     const option = By.xpath(
       `//select[@name='careerLevel']/option[@value='${value}']`
     );
@@ -97,9 +99,10 @@ class EntrySettingsPage {
       until.elementLocated(this.companyIndustry),
       5000
     );
-    await dropdown.click();
+    await this.driver.executeScript("arguments[0].click();", dropdown);
+    // await dropdown.click();
     const option = By.xpath(
-      `//select[@name='companyIndustry']/option[@value='${value}']`
+      `//select[@name='companyIndustry']/option[contains(., '${value}')]`
     );
     await this.driver.findElement(option).click();
   }
@@ -109,7 +112,8 @@ class EntrySettingsPage {
       until.elementLocated(this.companySegment),
       5000
     );
-    await dropdown.click();
+    await this.driver.executeScript("arguments[0].click();", dropdown);
+    // await dropdown.click();
     const option = By.xpath(
       `//select[@data-qa='timeline-edit-industry-second-level']/option[@value='${value}']`
     );
@@ -121,7 +125,8 @@ class EntrySettingsPage {
       until.elementLocated(this.startDateMonth),
       5000
     );
-    await monthDropdown.click();
+    await this.driver.executeScript("arguments[0].click();", monthDropdown);
+    // await monthDropdown.click();
     const monthOption = By.xpath(
       `//select[@data-qa='startDate-month-dropdown']/option[@value='${monthValue}']`
     );

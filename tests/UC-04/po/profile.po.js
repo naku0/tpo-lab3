@@ -13,7 +13,8 @@ class ProfilePage {
     this.profileImage = By.xpath('//div[@data-qa="photo-wrapper"]//img');
     this.locationLink =
       'https://www.xing.com/profile/my_profile/xing-id/contact-details/edit/business';
-    //UC-04.2
+    
+      //UC-04.2
     this.statusChangeLink = By.xpath(
       '//a[contains(@href="/profile/my_profile/xing-id/status-message/edit?sc_o=profile_self_editing_open_sub_page")]'
     );

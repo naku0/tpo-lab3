@@ -4,15 +4,13 @@ class JobsPage {
   constructor(driver) {
     this.driver = driver;
     this.searchButton = By.xpath('//a[@data-testid="frame-vnav-search"]');
-    // this.searchInput = By.xpath('/html/body/div[1]/div[2]/div/div/main/div/section/div/div/div[2]/form/div/input');
     this.searchInput = By.xpath('//*[@id="search-input"]');
-    // this.jobSearchInput = By.xpath('/html/body/div[1]/div[2]/div/div/main/div/section/div[4]/div[1]/div/div/form/div[1]/div[1]/div/textarea');
     this.jobSearchInput = By.xpath('//*[@id="query-input-input"]');
     this.modal = By.xpath('//div[@data-xds="PopOver"]//a[@data-testid="nav-search-members"]');
     this.members = By.xpath('//a[@data-testid="nav-search-members"]');
     this.jobs = By.xpath('//a[@data-testid="nav-search-jobs"]');
     this.companies = By.xpath('//a[@data-testid="nav-search-companies"]');
-    // this.submitButton = By.xpath('//form//button[@type="submit"]');
+
     this.submitButton = By.xpath('//*[@id="content"]/div/section/div/div/div[2]/form/button');
     this.jobSubmitButton = By.xpath('//*[@id="content"]/div/section/div[4]/div[1]/div/div/form/div[2]/button');
   }
@@ -52,7 +50,6 @@ class JobsPage {
     try {
       await submit.click();
     } catch {
-      // Fallback for overlays that still block a normal click.
       await this.driver.executeScript('arguments[0].click();', submit);
     }
   }
@@ -125,8 +122,7 @@ class JobsPage {
 
   async tryToFindJob(job) {
     try {
-      // const locator = By.xpath(`//*[contains(., '${job}')]`);
-      const locator = By.xpath(`//article[@data-testid="job-search-result"][contains(., '${job}')]`);
+      const locator = By.xpath(`//article[@data-testid='job-search-result'][contains(., '${job}')]`);
       const elements = await this.waitForAny(locator);
 
       return elements.length > 0;

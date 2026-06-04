@@ -85,16 +85,17 @@ describe('UC-04', () => {
       // Act
       await profilePersonalPage.enterLastName('Test Lastname');
 
-      // Assert
+      const isEnabled = await profilePersonalPage.isSaveButtonEnabled();
+
       expect(isDisabledInitially).toBe(true);
-      expect(await profilePersonalPage.isSaveButtonEnabled()).toBe(true);
+      expect(isEnabled).toBe(true);
     });
 
     it('should enable save button after changing title', async () => {
       // Arrange
       const isDisabledInitially =
         await profilePersonalPage.isSaveButtonDisabled();
-
+      
       // Act
       await profilePersonalPage.selectTitle('Dr.');
 
@@ -148,13 +149,16 @@ describe('UC-04', () => {
 
   describe('UC-04.4', () => {
     beforeEach(async () => {
-      await profilePage.waitForPageLoad();
+      await driver.get('https://www.xing.com/profile/my_profile/timeline/add/employee');
       await CookieAnnihilator3000Interceptor.annihilate(driver);
-      await profilePage.pushEditButton();
-      await CookieAnnihilator3000Interceptor.annihilate(driver);
-      await entrySettingsPage.openProfExpirience();
-      await entrySettingsPage.waitForPageLoad();
-      await CookieAnnihilator3000Interceptor.annihilate(driver);
+      
+      // await profilePage.waitForPageLoad();
+      // await CookieAnnihilator3000Interceptor.annihilate(driver);
+      // await profilePage.pushEditButton();
+      // await CookieAnnihilator3000Interceptor.annihilate(driver);
+      // await entrySettingsPage.openProfExpirience();
+      // await entrySettingsPage.waitForPageLoad();
+      // await CookieAnnihilator3000Interceptor.annihilate(driver);
     });
 
     it('should add new job', async () => {
@@ -165,6 +169,7 @@ describe('UC-04', () => {
         careerLevel: '1',
         discipline: '1011',
         companyName: 'Palantir Technologies',
+        industry: 'Architecture and planning',
         startDateMonth: '8',
         startDateYear: '2026',
       };
@@ -175,13 +180,13 @@ describe('UC-04', () => {
       await entrySettingsPage.selectCareerLevel(job.careerLevel);
       await entrySettingsPage.selectDiscipline(job.discipline);
       await entrySettingsPage.enterCompanyName(job.companyName);
+      await entrySettingsPage.selectCompanyIndustry(job.industry);
       await entrySettingsPage.selectStartDate(
         job.startDateMonth,
         job.startDateYear
       );
       await entrySettingsPage.submitForm();
       await profilePage.waitForPageLoad();
-      await CookieAnnihilator3000Interceptor.annihilate(driver);
       const isWorkplaceDisplayed = await entrySettingsPage.findWorkplace(
         job.companyName
       );

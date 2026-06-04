@@ -2,6 +2,7 @@ module.exports = {
   testEnvironment: 'jest-allure2-reporter/environment-node',
   verbose: true,
   testTimeout: 90000,
+  maxWorkers: 1,
   testMatch: ['**/*.spec.js'],
   collectCoverage: true,
   collectCoverageFrom: ['src/**/*.{js}'],

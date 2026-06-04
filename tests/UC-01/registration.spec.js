@@ -8,6 +8,10 @@ let registrationPage;
 let user;
 let driver;
 
+function generateRandomEmail(length) {
+    return Math.random().toString(36).substring(2, 2 + length) + '@gmail.com';
+}
+
 describe('UC-01', () => {
   beforeAll(async () => {
     // Arrange (глобальный)
@@ -80,35 +84,37 @@ describe('UC-01', () => {
     expect(errorText).toBe(expectedErrorMessage);
   });
 
-  it('should show password error message when all other fields are correct and password is very long', async () => {
+  it('should accept very long password and register user', async () => {
     // Arrange
-    const invalidPassword = 'juyffdgbhjuy6resdfghyu65r4edefghju76yt5r4edfghyujghnbmjkiuhhghhjkuyghjmnkhgfdgjfj12345678888888888#%$Y%Y%T^$#%@$#!';
-    const expectedErrorMessage =
-      'Unfortunately you can\'t sign up with the details you\'ve entered. If you have questions about this, feel free to get in touch.';
+    const longPassword = 'juyffdgbhjuy6resdfghyu65r4edefghju76yt5r4edfghyujghnbmjkiuhhghhjkuyghjmnkhgfdgjfj12345678888888888#%$Y%Y%T^$#%@$#!';
+    // 114 символов
+    const randomEmail = generateRandomEmail(7);
 
     // Act
     await registrationPage.enterFirstName(user.firstname);
     await registrationPage.enterLastName(user.lastname);
-    await registrationPage.enterEmail(user.email);
+    await registrationPage.enterEmail(longPassword);
     await registrationPage.enterPassword(invalidPassword);
     await registrationPage.clickRegisterButton();
 
-    await registrationPage.waitForPageLoad();
+    await CaptchaSolverInterceptor.solve(driver);
+    await driver.switchTo().defaultContent();
 
     // Assert
-    const errorEl = await registrationPage.getLongPasswordErrorMessage();
     const result = await registrationPage.waitForRegistrationSuccess();
-    expect(result || errorEl).toBeTruthy();
+    expect(result).toBeTruthy();
   });
 
   it('should register a new user', async () => {
     // Arrange
     // (данные user уже получены в beforeAll)
 
+    const randomEmail = generateRandomEmail(7);
+
     // Act
     await registrationPage.enterFirstName(user.firstname);
     await registrationPage.enterLastName(user.lastname);
-    await registrationPage.enterEmail(user.email);
+    await registrationPage.enterEmail(randomEmail);
     await registrationPage.enterPassword(user.password);
     await registrationPage.clickRegisterButton();
     await CaptchaSolverInterceptor.solve(driver);
