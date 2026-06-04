@@ -36,9 +36,7 @@ describe('UC-05', () => {
     await driver.quit();
   });
 
-  //TODO: Fix input search
   it('should find member', async () => {
-    //assert
     const member = 'John Brown';
 
     //act
@@ -48,51 +46,46 @@ describe('UC-05', () => {
     await jobsPage.findMember(member);
 
     //assert
-    expect(await jobsPage.tryToFindMember('John Brown')).toBe(true);
+    expect(await jobsPage.tryToFindMember(member)).toBe(true);
   });
 
   it('should find job', async () => {
-    //assert
-    const job = 'java';
+    const job = 'Java';
 
     //act
-      await CookieAnnihilator3000Interceptor.annihilate(driver);
+    await CookieAnnihilator3000Interceptor.annihilate(driver);
     await jobsPage.clickJobs();
     await CookieAnnihilator3000Interceptor.annihilate(driver);
     await jobsPage.findJob(job);
 
     //assert
-    expect(await jobsPage.tryToFindJob('java')).toBe(true);
+    expect(await jobsPage.tryToFindJob(job)).toBe(true);
   });
 
-
-  //TODO: Fix input search
   it('should find company', async () => {
-    //assert
     const company = 'Palantir Technologies';
 
     //act
-      await CookieAnnihilator3000Interceptor.annihilate(driver);
+    await CookieAnnihilator3000Interceptor.annihilate(driver);
     await jobsPage.clickCompanies();
     await CookieAnnihilator3000Interceptor.annihilate(driver);
     await jobsPage.findCompany(company);
 
     //assert
-    expect(await jobsPage.tryToFindCompany('Palantir Technologies')).toBe(true);
+    expect(await jobsPage.tryToFindCompany(company)).toBe(true);
   });
 
-  it('should write gibberish in search', async () => {
-    //assert
-    const gibberish = "dfskjgjskafjksfdfske";
+  it('should write beliberda in search', async () => {
+    const beliberda = "dfskjgjskafjksfdfskedfdsf";
 
     //act
     await CookieAnnihilator3000Interceptor.annihilate(driver);
-    await jobsPage.clickJobs();
+    await jobsPage.clickMembers();
     await CookieAnnihilator3000Interceptor.annihilate(driver);
-    await jobsPage.findJob(gibberish)
+    await jobsPage.findMember(beliberda);
     await CookieAnnihilator3000Interceptor.annihilate(driver);
 
     //assert
-    expect(await jobsPage.tryToFindBiliberdaResult()).toBe(true);
+    expect(await jobsPage.tryToFindMemberBiliberdaResult()).toBe(true);
   })
 });

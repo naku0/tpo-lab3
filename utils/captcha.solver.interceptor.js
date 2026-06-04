@@ -23,7 +23,7 @@ class CaptchaSolverInterceptor {
 
       await driver.switchTo().defaultContent();
 
-      await driver.sleep(3000);
+      await driver.sleep(30000);
 
       console.log('[CAPTCHA] Waiting captcha disappear');
 
